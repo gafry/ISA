@@ -1,0 +1,45 @@
+.TH MULTICAST_ANALYZATOR 8
+.SH NAZEV
+multicast_analyzator \- program se prihlasi do zadanych multicastovych skupin a zacne monitorovat IPTV stream. Nasledne zpracuje packety a vytvori statistiky o jednotlivych elementary streamech.
+.SH VOLANI
+sudo
+.B ./mctest
+<group> [ <group> [ ... ] ]
+.HP
+Musi byt zadany ip adresy ve spravnem rozsahu.
+.SH POPIS
+.B multicast_analyzator
+zachytava UDP packety ze zadanych multicastovych skupin, zpracuje jejich hlavicky, z nich ziska source adresy, nasledne zpracuje jednotlive MPEG bloky. MPEG bloky maji ruzne PID cislo, ke kazdemu PID cislu si program priradi, zda-li jde o video, audio nebo o neznamy typ(napr. cas). Nam jde predevsim o mereni audia a videa, proto ostatni typy nerozeznavame, presto jsou vypisovany. 
+.SH MERENE HODNOTY MULTICASTOVYCH SKUPIN
+.HP
+.B bandwidth
+- mnozstvi prenesenych dat za 1 sekundu
+.HP
+.B UDP packets
+- pocet prijatych UDP packetu
+.HP
+.B MPEG-TS blocks
+- pocet prijatych MPEG bloku
+.SH MERENE HODNOTY ELEMENTARY STREAMU
+.HP
+.B PID
+- identifikator MPEG bloku
+.HP
+.B type
+- typ MPEG bloku (video, audio, cas, ...)
+.HP
+.B bandwidth
+- mnozstvi prenesenych dat za 1 sekundu
+.HP
+.B out of sync (%)
+- % bloku dat, ktere prisly ve spatnem poradi, pocitano jako pocet_vynechanych_bloku/(celkovy_pocet_MPEG+vynechane_bloky)
+.HP
+.B avg jitter
+- prumerna doba mezi prijetim jednotlivych UDP packetu pro elementary streamy, ktere jsou v danem UDP obsazeny
+.HP
+.B peak jitter
+- nejvyssi doba mezi dvema UDP packety pro dany elementary stream
+.HP
+.SH BUGS
+- neni implementovano pro ipv6
+- neni implementovana kontrola rozsahu adres
